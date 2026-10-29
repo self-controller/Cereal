@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>dev.cereal.app</id>
+  <name>Cereal</name>
+  <summary>AI meeting notepad: take notes, Cereal listens and writes them up</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <developer id="dev.cereal">
+    <name>David Ji</name>
+  </developer>
+  <description>
+    <p>
+      Jot down the few things that matter during a meeting. Cereal records your microphone and your speakers
+      through PipeWire, so no bot joins the call, and transcribes both sides live. When the meeting ends, it turns
+      your notes and the transcript into clean, structured notes.
+    </p>
+    <ul>
+      <li>Live transcription with Deepgram, or locally with Whisper</li>
+      <li>Enhanced notes from templates, which you can edit</li>
+      <li>Ask questions about one meeting or all of them</li>
+      <li>An assistant for tasks, routines and follow-ups</li>
+      <li>Claude, OpenAI, Gemini or a local model through Ollama</li>
+      <li>Your notes stay on your computer. API keys live in a private file you edit yourself</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">dev.cereal.app.desktop</launchable>
+  <url type="homepage">https://github.com/Self-controller</url>
+  <categories>
+    <category>Office</category>
+  </categories>
+  <requires>
+    <display_length compare="ge">500</display_length>
+  </requires>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-10-20"/>
+  </releases>
+</component>

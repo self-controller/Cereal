@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Cereal
+GenericName=Meeting Notepad
+Comment=AI meeting notepad: take notes, Cereal listens and writes them up
+Exec=cereal %U
+Icon=dev.cereal.app
+Terminal=false
+Categories=Office;
+Keywords=meeting;notes;transcript;transcription;
+StartupNotify=true

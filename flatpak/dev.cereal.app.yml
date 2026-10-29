@@ -1,0 +1,103 @@
+# Cereal as a Flatpak. Build it with scripts/flatpak.sh, which regenerates generated-sources.json (every npm
+# package, Electron and its headers, pinned by hash) so the build runs without network access.
+id: dev.cereal.app
+runtime: org.freedesktop.Platform
+runtime-version: '26.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '26.08'
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node22
+command: cereal
+separate-locales: false
+
+finish-args:
+  # Deepgram, Claude, OpenAI, Gemini and Google APIs; a local Ollama; the Google sign-in loopback.
+  - --share=network
+  # The main window runs on Wayland. The floating widget runs as an XWayland window so it can sit at the screen
+  # edge and stay on top (src/main/widget/controller.ts), which needs X11, and X11 needs ipc.
+  - --socket=wayland
+  - --socket=x11
+  - --share=ipc
+  # Chromium audio: UI sounds and the microphone in the page.
+  - --socket=pulseaudio
+  # pw-record (microphone and the speakers' monitor) and pw-dump (devices, meeting detection).
+  - --filesystem=xdg-run/pipewire-0
+  - --device=dri
+  # Meeting reminders and the tray icon.
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --env=XCURSOR_PATH=/run/host/user-share/icons:/run/host/share/icons
+  # Not granted, on purpose: home or host files (the file chooser and open-file portals cover attachments and
+  # "Open .env"), org.freedesktop.secrets (the Secret portal protects Cereal's own token instead), and
+  # org.freedesktop.Flatpak (flatpak-spawn --host would escape the sandbox).
+
+modules:
+  # Local transcription. Cereal finds whisper-server on PATH (src/main/transcription/whisper.ts).
+  - name: whisper-cpp
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DBUILD_SHARED_LIBS=ON
+      # A portable build: every CPU variant, the best one picked at runtime.
+      - -DGGML_NATIVE=OFF
+      - -DGGML_BACKEND_DL=ON
+      - -DGGML_CPU_ALL_VARIANTS=ON
+      - -DGGML_BACKEND_DIR=/app/lib/ggml
+      - -DWHISPER_BUILD_EXAMPLES=ON
+      - -DWHISPER_BUILD_SERVER=ON
+      - -DWHISPER_BUILD_TESTS=OFF
+      - -DWHISPER_SDL2=OFF
+      - -DWHISPER_CURL=OFF
+    post-install:
+      # Keep only the server of whisper.cpp's tools (/app/bin also holds the BaseApp's zypak and helpers).
+      - find /app/bin -maxdepth 1 \( -name 'whisper-*' -o -name 'parakeet-*' \) ! -name whisper-server -delete
+    cleanup:
+      - /include
+      - /lib/cmake
+      - /lib/pkgconfig
+    sources:
+      - type: archive
+        url: https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v1.9.5.tar.gz
+        sha256: ff1a9053feb509ff9d7729703355541ae9690073a6b1c40eb692c962e0dc1720
+
+  - name: cereal
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/node22/bin
+      env:
+        XDG_CACHE_HOME: /run/build/cereal/flatpak-node/cache
+        npm_config_cache: /run/build/cereal/flatpak-node/npm-cache
+        npm_config_offline: 'true'
+        ELECTRON_CACHE: /run/build/cereal/flatpak-node/cache/electron
+        electron_config_cache: /run/build/cereal/flatpak-node/cache/electron
+    build-commands:
+      # Install scripts are skipped: the root postinstall rebuilds native modules, which isn't needed because
+      # better-sqlite3 ships an N-API prebuild; the others are a no-op and a version check.
+      - npm ci --offline --ignore-scripts --no-audit --no-fund
+      - npx --no-install electron-vite build
+      # electronDist: the Electron zip the generator fetched, so electron-builder doesn't download it.
+      - . flatpak-node/electron-builder-arch-args.sh && npx --no-install electron-builder --linux --dir $ELECTRON_BUILDER_ARCH_ARGS -c.linux.target=dir -c.npmRebuild=false -c.electronDist="$ELECTRON_CACHE"
+      - cp -a dist/linux*unpacked /app/cereal
+      # zypak (from the BaseApp) replaces Chromium's setuid sandbox inside Flatpak.
+      - rm -f /app/cereal/chrome-sandbox
+      # Electron takes its Wayland app ID from package.json's desktopName; make it match this app's desktop file.
+      - patch-electron-desktop-filename /app/cereal/resources/app.asar
+      - install -Dm755 flatpak/cereal.sh /app/bin/cereal
+      - install -Dm644 flatpak/dev.cereal.app.desktop -t /app/share/applications
+      - install -Dm644 flatpak/dev.cereal.app.metainfo.xml -t /app/share/metainfo
+      - install -Dm644 build/icon.png /app/share/icons/hicolor/512x512/apps/dev.cereal.app.png
+      - install -Dm644 build/icon.svg /app/share/icons/hicolor/scalable/apps/dev.cereal.app.svg
+    sources:
+      # This checkout. Switch to a git source (tag + commit) to build a release elsewhere, e.g. on Flathub.
+      - type: dir
+        path: ..
+        skip:
+          - node_modules
+          - out
+          - dist
+          - .git
+          - .flatpak
+          - .flatpak-builder
+      - generated-sources.json

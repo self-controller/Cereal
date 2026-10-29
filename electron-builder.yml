@@ -1,0 +1,17 @@
+appId: dev.cereal.app
+productName: Cereal
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**
+  - package.json
+asarUnpack:
+  - node_modules/better-sqlite3/**
+linux:
+  # Cereal ships as a Flatpak only (flatpak/dev.cereal.app.yml), which packages this unpacked build.
+  target: dir
+  category: Office
+  icon: build/icon.png
+  executableName: cereal
+  synopsis: AI meeting notepad

@@ -1,0 +1,1056 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * Design tokens: Granola's "oats" semantic set (docs/granola-ui.md §Tokens), with its olive-green accent
+ * replaced by Cereal's deep navy. Components use the semantic names (fill-*, ink-*, surface-*, hairline).
+ */
+:root {
+  --oats-surface: #f7f7f2;
+  --oats-surface-raised: #ffffff;
+  --oats-surface-elevated: #ffffff;
+  --oats-surface-sunken: #f2f2ec;
+  --oats-surface-tooltip: #363635;
+  --oats-surface-overlay: #818179;
+  --oats-surface-accent-blue: #eaf4fe;
+  --oats-surface-accent-green: #f2f6e1;
+  --oats-surface-accent-purple: #f3f0fa;
+  --oats-surface-tint-neutral: #625a220f;
+  --oats-surface-tint-accent: #e4eaf7;
+
+  --oats-ink-primary: #292929;
+  --oats-ink-secondary-strong: #4e4d4b;
+  --oats-ink-secondary: #72726e;
+  --oats-ink-tertiary: #acada8;
+  --oats-ink-primary-static: #292929;
+  --oats-ink-secondary-strong-static: #4e4d4b;
+  --oats-ink-secondary-static: #72726e;
+  --oats-ink-tertiary-static: #acada8;
+  --oats-ink-primary-inverse: #fcfcf8;
+  --oats-ink-secondary-inverse: #9e9e99;
+  --oats-ink-primary-inverse-static: #fcfcf8;
+  --oats-ink-secondary-strong-inverse-static: #acada8;
+  --oats-ink-secondary-inverse-static: #9e9e99;
+  --oats-ink-accent: #3558c8;
+  --oats-ink-accent-strong: #1e3a8a;
+  --oats-ink-danger: #bd4a30;
+  --oats-ink-success: #4e7a1e;
+
+  --oats-fill-primary: #292929;
+  --oats-fill-primary-hover: #4e4d4b;
+  --oats-fill-primary-inverse: #eaebe5;
+  --oats-fill-accent: #1e3a8a;
+  --oats-fill-accent-hover: #172e6e;
+  --oats-fill-accent-highlight: #3558c826;
+  --oats-fill-accent-highlight-strong: #1e3a8a33;
+  --oats-fill-danger: #e95d3d;
+  --oats-fill-danger-hover: #bd4a30;
+  --oats-fill-neutral: #acada8;
+  --oats-fill-disabled: #d5d5d2;
+  --oats-fill-highlight: #625a220f;
+  --oats-fill-highlight-strong: #56512e1f;
+  --oats-fill-highlight-inverse: #ffffff0f;
+  --oats-fill-highlight-strong-inverse: #ffffff26;
+  --oats-fill-soft: #625a220f;
+  --oats-fill-soft-hover: #56512e1f;
+  --oats-fill-soft-opaque: #eaebe5;
+  --oats-fill-soft-opaque-hover: #d5d5d2;
+  --oats-fill-input: #ffffff;
+  --oats-fill-input-disabled: #f7f7f2;
+  --oats-fill-warning: #fed468;
+  --oats-fill-warning-hover: #ffeaa6;
+
+  --oats-border-hairline: #47432a33;
+  --oats-border-focus: #3558c899;
+  --oats-system-dancing-bars: #3d7bff;
+
+  --oats-highlight-faint: #625a220f;
+  --oats-highlight: #625a220f;
+  --oats-highlight-secondary: #56512e1f;
+  --oats-border-primary: #625a220f;
+  --oats-border-strong: #56512e1f;
+  --oats-border-stronger: #47432a33;
+  --oats-bubble-them: #f2f2ec;
+  --oats-bubble-you: #3558c824;
+  --oats-bubble-you-ink: #1e3a8a;
+
+  --shadow-color-strong: rgb(0 0 0 / 0.1);
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --oats-surface: #292929;
+  --oats-surface-raised: #313130;
+  --oats-surface-elevated: #363635;
+  --oats-surface-sunken: #212121;
+  --oats-surface-tooltip: #363635;
+  --oats-surface-overlay: #4e4d4b;
+  --oats-surface-accent-blue: #2e303b;
+  --oats-surface-accent-green: #313225;
+  --oats-surface-accent-purple: #34313e;
+  --oats-surface-tint-neutral: #ffffff0a;
+  --oats-surface-tint-accent: #2b3250;
+
+  --oats-ink-primary: #fcfcf8;
+  --oats-ink-secondary-strong: #acada8;
+  --oats-ink-secondary: #9e9e99;
+  --oats-ink-tertiary: #818179;
+  --oats-ink-primary-inverse: #292929;
+  --oats-ink-secondary-inverse: #72726e;
+  --oats-ink-accent: #8fa8f5;
+  --oats-ink-accent-strong: #a9beff;
+  --oats-ink-danger: #ec7558;
+  --oats-ink-success: #b2c248;
+
+  --oats-fill-primary: #eaebe5;
+  --oats-fill-primary-hover: #acada8;
+  --oats-fill-primary-inverse: #292929;
+  --oats-fill-accent: #2c4db0;
+  --oats-fill-accent-hover: #3a5cc4;
+  --oats-fill-accent-highlight: #8fa8f533;
+  --oats-fill-accent-highlight-strong: #a9beff33;
+  --oats-fill-danger: #bd4a30;
+  --oats-fill-danger-hover: #e95d3d;
+  --oats-fill-neutral: #72726e;
+  --oats-fill-disabled: #4e4d4b;
+  --oats-fill-highlight: #ffffff0f;
+  --oats-fill-highlight-strong: #ffffff26;
+  --oats-fill-highlight-inverse: #625a220f;
+  --oats-fill-highlight-strong-inverse: #56512e1f;
+  --oats-fill-soft: #ffffff0f;
+  --oats-fill-soft-hover: #ffffff26;
+  --oats-fill-soft-opaque: #363635;
+  --oats-fill-soft-opaque-hover: #72726e;
+  --oats-fill-input: #363635;
+  --oats-fill-input-disabled: #363635;
+
+  --oats-border-hairline: #ffffff26;
+  --oats-border-focus: #a9beff99;
+
+  --oats-highlight-faint: #ffffff0a;
+  --oats-highlight: #ffffff0f;
+  --oats-highlight-secondary: #ffffff26;
+  --oats-border-primary: #ffffff0f;
+  --oats-border-strong: #ffffff1f;
+  --oats-border-stronger: #ffffff33;
+  --oats-bubble-them: #4e4d4b;
+  --oats-bubble-you: #2b3250;
+  --oats-bubble-you-ink: #e4eaf7;
+
+  --shadow-color-strong: rgb(0 0 0 / 0.35);
+  color-scheme: dark;
+}
+
+@theme {
+  --text-2xs: 11px;
+  --text-2xs--line-height: 14px;
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-xs--letter-spacing: 0.02em;
+  --text-sm: 13px;
+  --text-sm--line-height: 16px;
+  --text-sm--letter-spacing: 0.01em;
+  --text-base: 14px;
+  --text-base--line-height: 18px;
+  --text-base--letter-spacing: 0.01em;
+  --text-lg: 16px;
+  --text-lg--line-height: 20px;
+  --text-editor-sm: 15px;
+  --text-editor: 16px;
+  --font-weight-book: 430;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-bottom-bar: 0px 4px 6px -2px #0000000d;
+  --scale-101: 1.01;
+  --spacing-85: 21.25rem;
+
+  --color-oats-white: #ffffff;
+  --color-oats-black: #000000;
+  --color-oats-neutral-50: #fcfcf8;
+  --color-oats-neutral-100: #f7f7f2;
+  --color-oats-neutral-150: #f2f2ec;
+  --color-oats-neutral-200: #eaebe5;
+  --color-oats-neutral-300: #d5d5d2;
+  --color-oats-neutral-400: #acada8;
+  --color-oats-neutral-500: #818179;
+  --color-oats-neutral-600: #72726e;
+  --color-oats-neutral-700: #4e4d4b;
+  --color-oats-neutral-750: #363635;
+  --color-oats-neutral-800: #292929;
+  --color-oats-neutral-900: #212121;
+  --color-oats-neutral-950: #1e1e1e;
+  --color-oats-off-black-a6: #625a220f;
+  --color-oats-off-black-a12: #56512e1f;
+  --color-oats-off-black-a20: #47432a33;
+  --color-oats-off-white-a4: #ffffff0a;
+  --color-oats-off-white-a6: #ffffff0f;
+  --color-oats-off-white-a15: #ffffff26;
+  --color-oats-off-white-a20: #ffffff33;
+  --color-oats-red-50: #ffe7e2;
+  --color-oats-red-100: #f8cec5;
+  --color-oats-red-200: #f29e8b;
+  --color-oats-red-300: #e95d3d;
+  --color-oats-red-400: #bd4a30;
+  --color-oats-yellow-50: #fff4d2;
+  --color-oats-yellow-100: #ffeaa6;
+  --color-oats-yellow-200: #febe29;
+  --color-oats-yellow-300: #ed9212;
+  --color-oats-yellow-400: #8b4e23;
+  --color-oats-blue-50: #eaf4fe;
+  --color-oats-blue-100: #d2e4f8;
+  --color-oats-blue-200: #b8d5ff;
+  --color-oats-blue-300: #4691e2;
+  --color-oats-blue-400: #3e49b8;
+  --color-oats-purple-100: #e8e4f3;
+  --color-oats-purple-400: #564391;
+  --color-oats-pink-100: #ffdef6;
+  --color-oats-pink-400: #a42962;
+  --color-oats-gold-100: #ede1a1;
+  --color-oats-gold-400: #40351a;
+  /* The thinking mark's echo layers: the cereal-ring blues from the app icon. */
+  --color-loop-echo-1: #9db4f2;
+  --color-loop-echo-2: #6f8fe8;
+  --color-loop-echo-3: #4a6fd8;
+
+  --animate-slide-up-fade: slideUpAndFade 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-down-fade: slideDownAndFade 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-chip-enter: chip-enter 240ms ease-out both;
+  --animate-chat-tool-swap-in: chat-tool-swap-in 0.2s ease-out both;
+  --animate-workflow-outcome-in: workflowOutcomeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards;
+  --animate-wiggle: wiggle 0.5s ease-in-out;
+  --animate-nudge: nudge 5.5s ease-in-out 5s infinite;
+  --animate-shimmer: shimmer 5s ease-in-out infinite;
+  --animate-check-pop: follow-ups-check-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-row-slide-up: follow-ups-row-slide-up 0.4s ease-out 0.5s both;
+  --animate-jumping-dots: oats-jumping-dots 1s infinite;
+}
+
+@theme inline {
+  --color-surface: var(--oats-surface);
+  --color-surface-raised: var(--oats-surface-raised);
+  --color-surface-elevated: var(--oats-surface-elevated);
+  --color-surface-sunken: var(--oats-surface-sunken);
+  --color-surface-tooltip: var(--oats-surface-tooltip);
+  --color-surface-overlay: var(--oats-surface-overlay);
+  --color-surface-accent-blue: var(--oats-surface-accent-blue);
+  --color-surface-accent-green: var(--oats-surface-accent-green);
+  --color-surface-accent-purple: var(--oats-surface-accent-purple);
+  --color-surface-tint-neutral: var(--oats-surface-tint-neutral);
+  --color-surface-tint-accent: var(--oats-surface-tint-accent);
+
+  --color-ink-primary: var(--oats-ink-primary);
+  --color-ink-secondary-strong: var(--oats-ink-secondary-strong);
+  --color-ink-secondary: var(--oats-ink-secondary);
+  --color-ink-tertiary: var(--oats-ink-tertiary);
+  --color-ink-primary-static: var(--oats-ink-primary-static);
+  --color-ink-secondary-strong-static: var(--oats-ink-secondary-strong-static);
+  --color-ink-secondary-static: var(--oats-ink-secondary-static);
+  --color-ink-tertiary-static: var(--oats-ink-tertiary-static);
+  --color-ink-primary-inverse: var(--oats-ink-primary-inverse);
+  --color-ink-secondary-inverse: var(--oats-ink-secondary-inverse);
+  --color-ink-primary-inverse-static: var(--oats-ink-primary-inverse-static);
+  --color-ink-secondary-strong-inverse-static: var(--oats-ink-secondary-strong-inverse-static);
+  --color-ink-secondary-inverse-static: var(--oats-ink-secondary-inverse-static);
+  --color-ink-accent: var(--oats-ink-accent);
+  --color-ink-accent-strong: var(--oats-ink-accent-strong);
+  --color-ink-danger: var(--oats-ink-danger);
+  --color-ink-success: var(--oats-ink-success);
+
+  --color-fill-primary: var(--oats-fill-primary);
+  --color-fill-primary-hover: var(--oats-fill-primary-hover);
+  --color-fill-primary-inverse: var(--oats-fill-primary-inverse);
+  --color-fill-accent: var(--oats-fill-accent);
+  --color-fill-accent-hover: var(--oats-fill-accent-hover);
+  --color-fill-accent-highlight: var(--oats-fill-accent-highlight);
+  --color-fill-accent-highlight-strong: var(--oats-fill-accent-highlight-strong);
+  --color-fill-danger: var(--oats-fill-danger);
+  --color-fill-danger-hover: var(--oats-fill-danger-hover);
+  --color-fill-neutral: var(--oats-fill-neutral);
+  --color-fill-disabled: var(--oats-fill-disabled);
+  --color-fill-highlight: var(--oats-fill-highlight);
+  --color-fill-highlight-strong: var(--oats-fill-highlight-strong);
+  --color-fill-highlight-inverse: var(--oats-fill-highlight-inverse);
+  --color-fill-highlight-strong-inverse: var(--oats-fill-highlight-strong-inverse);
+  --color-fill-soft: var(--oats-fill-soft);
+  --color-fill-soft-hover: var(--oats-fill-soft-hover);
+  --color-fill-soft-opaque: var(--oats-fill-soft-opaque);
+  --color-fill-soft-opaque-hover: var(--oats-fill-soft-opaque-hover);
+  --color-fill-input: var(--oats-fill-input);
+  --color-fill-input-disabled: var(--oats-fill-input-disabled);
+  --color-fill-warning: var(--oats-fill-warning);
+  --color-fill-warning-hover: var(--oats-fill-warning-hover);
+
+  --color-hairline: var(--oats-border-hairline);
+  --color-focus: var(--oats-border-focus);
+  --color-system-dancing-bars: var(--oats-system-dancing-bars);
+  --color-highlight-faint: var(--oats-highlight-faint);
+  --color-highlight: var(--oats-highlight);
+  --color-highlight-secondary: var(--oats-highlight-secondary);
+  --color-border-primary: var(--oats-border-primary);
+  --color-border-strong: var(--oats-border-strong);
+  --color-border-stronger: var(--oats-border-stronger);
+  --color-bubble-them: var(--oats-bubble-them);
+  --color-bubble-you: var(--oats-bubble-you);
+  --color-bubble-you-ink: var(--oats-bubble-you-ink);
+
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'IBM Plex Serif', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', monospace;
+}
+
+/* Display headings: serif, regular weight, never bold. */
+@utility text-h1 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+@utility text-h2 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+@utility text-h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+@utility text-lg-slab {
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* Focus rings: 1.5px outline in the focus colour, outside or inset. */
+@utility ring-focus-ring {
+  outline-color: var(--color-focus);
+  &:focus-visible {
+    outline: 1.5px solid var(--color-focus);
+    outline-offset: 1px;
+  }
+}
+@utility ring-focus-ring-inset {
+  outline-color: var(--color-focus);
+  &:focus-visible {
+    outline: 1.5px solid var(--color-focus);
+    outline-offset: -1.5px;
+  }
+}
+@utility ring-focus-ring-inset-within {
+  &:has([data-focus-ring-target]:focus-visible) {
+    outline: 1.5px solid var(--color-focus);
+    outline-offset: -1.5px;
+  }
+}
+
+/* Children stacked in one grid cell (cross-fades, label swaps). */
+@utility grid-pile {
+  display: grid;
+  & > * {
+    grid-area: 1 / 1;
+  }
+}
+
+@utility drag {
+  -webkit-app-region: drag;
+}
+@utility no-drag {
+  -webkit-app-region: no-drag;
+}
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  *,
+  :after,
+  :before,
+  ::backdrop {
+    border-color: var(--oats-border-hairline);
+  }
+  /* Granola's focus ring, for anything without its own: a 1.5px outline in the focus colour. */
+  :focus-visible {
+    outline: 1.5px solid var(--color-focus);
+    outline-offset: 1px;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-ink-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-variation-settings: 'opsz' 28;
+  user-select: none;
+}
+
+input,
+textarea,
+[contenteditable='true'],
+.selectable {
+  user-select: text;
+}
+
+::selection {
+  background: var(--color-fill-accent-highlight-strong);
+}
+
+/* Granola's Inter fallback is drawn on its 24-unit icon grid at 16px with an absolute 1.25px stroke. */
+svg.lucide {
+  stroke-width: 1.25px;
+}
+svg.lucide * {
+  vector-effect: non-scaling-stroke;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hairline) transparent;
+}
+
+html.disable-transitions,
+html.disable-transitions *,
+html.disable-transitions :before,
+html.disable-transitions :after {
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  :before,
+  :after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------- keyframes */
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes chip-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes chat-tool-swap-in {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+@keyframes workflowOutcomeIn {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+@keyframes oats-jumping-dots {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+@keyframes sparklesIconSlow {
+  0%,
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  15%,
+  85% {
+    opacity: 0.8;
+    transform: scale(0.7);
+  }
+  30%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes chromaGenerateIdleSweepLoop {
+  from {
+    background-position: 100%;
+  }
+  to {
+    background-position: 0%;
+  }
+}
+@keyframes blink {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  61%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes nudge {
+  0%,
+  9.1%,
+  100% {
+    transform: translateX(0);
+  }
+  1.8% {
+    transform: translateX(-3px);
+  }
+  3.6% {
+    transform: translateX(3px);
+  }
+  5.5% {
+    transform: translateX(-3px);
+  }
+  7.3% {
+    transform: translateX(3px);
+  }
+}
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15%,
+  45%,
+  75% {
+    transform: translateX(-5px);
+  }
+  30%,
+  60%,
+  90% {
+    transform: translateX(5px);
+  }
+}
+@keyframes shimmer {
+  from {
+    background-position: 250%;
+  }
+  to {
+    background-position: -250%;
+  }
+}
+@keyframes follow-ups-check-pop {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes follow-ups-row-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* LoopMark (components/oats/LoopMark.tsx). Each ring is one dash as long as the ring (pathLength 1, gap 0.75).
+   Moving the offset by a whole period (1.75) unwinds the ring from its start, holds it a third drawn, then redraws it.
+   The echoes run the same path on stronger curves: they lag while the ring unwinds and lead, overshooting slightly,
+   while it redraws. */
+@keyframes loop-ring {
+  0%,
+  15% {
+    stroke-dashoffset: 0;
+  }
+  47.5%,
+  50% {
+    stroke-dashoffset: 1.08px;
+  }
+  80%,
+  100% {
+    stroke-dashoffset: 1.75px;
+  }
+}
+@keyframes loop-echo-1 {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  15% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.12, 0, 0.39, 0);
+  }
+  47.5% {
+    stroke-dashoffset: 1.08px;
+  }
+  50% {
+    stroke-dashoffset: 1.08px;
+    animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+  }
+  80%,
+  100% {
+    stroke-dashoffset: 1.75px;
+  }
+}
+@keyframes loop-echo-2 {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  15% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+  }
+  47.5% {
+    stroke-dashoffset: 1.08px;
+  }
+  50% {
+    stroke-dashoffset: 1.08px;
+    animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  80%,
+  100% {
+    stroke-dashoffset: 1.75px;
+  }
+}
+@keyframes loop-echo-3 {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  15% {
+    stroke-dashoffset: 0;
+    animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
+  }
+  47.5% {
+    stroke-dashoffset: 1.08px;
+  }
+  50% {
+    stroke-dashoffset: 1.08px;
+    animation-timing-function: cubic-bezier(0.34, 1.3, 0.64, 1);
+  }
+  80%,
+  100% {
+    stroke-dashoffset: 1.75px;
+  }
+}
+.loop-mark path {
+  stroke: currentColor;
+  stroke-linecap: round;
+  animation: loop-ring var(--loop-duration, 3.2s) linear infinite;
+}
+.loop-mark-echo {
+  opacity: 0.7;
+}
+.loop-mark .loop-mark-echo-1 {
+  animation-name: loop-echo-1;
+}
+.loop-mark .loop-mark-echo-2 {
+  animation-name: loop-echo-2;
+}
+.loop-mark .loop-mark-echo-3 {
+  animation-name: loop-echo-3;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loop-mark-echo {
+    display: none;
+  }
+}
+
+/* The user's notes while new notes are written from them: a grey band sweeps through each line, and each line
+   starts 140 ms after the one above (the delay is set inline), so the sweep runs down the page. */
+@property --grayscale-text-pos {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 100%;
+}
+@keyframes grayscale-text-swipe {
+  from {
+    --grayscale-text-pos: 100%;
+  }
+  to {
+    --grayscale-text-pos: 0%;
+  }
+}
+.grayscale-text-pulse,
+.grayscale-text-pulse :is(strong, em, s, code, a, span) {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(90deg, var(--color-ink-primary) 0%, var(--color-ink-primary) 46%, var(--color-ink-tertiary) 50%, var(--color-ink-primary) 54%, var(--color-ink-primary) 100%);
+  background-repeat: no-repeat;
+  background-size: 320% 100%;
+  background-position: var(--grayscale-text-pos) 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.grayscale-text-pulse {
+  animation: grayscale-text-swipe 2.2s linear infinite;
+}
+/* Heading markers keep their own muted colour inside the sweep. */
+.grayscale-text-pulse::before {
+  color: var(--color-ink-tertiary);
+  -webkit-text-fill-color: currentColor;
+  background-image: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .grayscale-text-pulse,
+  .grayscale-text-pulse :is(strong, em, s, code, a, span) {
+    color: inherit;
+    -webkit-text-fill-color: currentColor;
+    background-image: none;
+    animation: none;
+  }
+}
+
+/* "Thinking…" style text: a highlight sweeps across muted ink. */
+.shimmer-text {
+  color: transparent;
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--color-ink-primary) 20%, transparent), var(--color-ink-primary), color-mix(in srgb, var(--color-ink-primary) 20%, transparent));
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: var(--animate-shimmer);
+}
+
+/* The Generate notes pill's label: on hover, a pastel sweep runs through the white text. */
+.chroma-label {
+  position: relative;
+  display: inline-block;
+}
+.chroma-label::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  color: transparent;
+  background-image: linear-gradient(
+    105deg,
+    var(--color-ink-primary-inverse-static) 0%,
+    var(--color-ink-primary-inverse-static) 32%,
+    color-mix(in srgb, var(--color-ink-primary-inverse-static) 62%, #febe29) 40%,
+    color-mix(in srgb, var(--color-ink-primary-inverse-static) 52%, #ff91e0) 47%,
+    color-mix(in srgb, var(--color-ink-primary-inverse-static) 52%, #cebef8) 53%,
+    color-mix(in srgb, var(--color-ink-primary-inverse-static) 62%, #b8d5ff) 60%,
+    var(--color-ink-primary-inverse-static) 66%,
+    var(--color-ink-primary-inverse-static) 100%
+  );
+  background-size: 320% 100%;
+  background-position: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.group\/chroma:hover .chroma-label::after {
+  opacity: 1;
+  animation: chromaGenerateIdleSweepLoop 2.2s linear infinite;
+}
+.group\/chroma:hover .chroma-label > span {
+  color: transparent;
+}
+
+.blinking-cursor {
+  animation: blink 1.4s infinite;
+}
+
+/* Dashed hairline separator used between Coming up rows and in settings cards. */
+.dashed-rule {
+  height: 0.5px;
+  background-image: linear-gradient(to right, var(--color-border-stronger) 50%, transparent 50%);
+  background-size: 8px 0.5px;
+  background-repeat: repeat-x;
+}
+
+/* ------------------------------------------------- notepad + enhanced notes */
+
+.notepad {
+  container-type: inline-size;
+}
+.notepad .ProseMirror {
+  outline: none;
+  min-height: 50vh;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-ink-primary);
+  padding-bottom: 8rem;
+}
+@container (width >= 32rem) {
+  .notepad .ProseMirror {
+    font-size: 16px;
+  }
+}
+.notepad .ProseMirror > * + * {
+  margin-top: 0.3em;
+}
+.notepad .ProseMirror :is(h1, h2, h3) {
+  position: relative;
+  margin-top: 1em;
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--color-ink-primary);
+}
+/* Enhanced-notes headings (Markdown.tsx); size and colour come from utilities. */
+.prose-heading {
+  position: relative;
+}
+/* Granola-style "#" marker hanging in the left margin of headings. */
+.notepad .ProseMirror :is(h1, h2, h3)::before,
+.prose-heading::before {
+  content: '#';
+  position: absolute;
+  left: -20px;
+  top: 0;
+  font-weight: 400;
+  color: var(--color-ink-tertiary);
+  opacity: 0.6;
+}
+.notepad .ProseMirror ul,
+.notepad .ProseMirror ol {
+  margin-left: 1.5rem;
+  padding-bottom: 0.25rem;
+}
+.notepad .ProseMirror ul {
+  list-style: disc;
+}
+.notepad .ProseMirror ol {
+  list-style: decimal;
+}
+.notepad .ProseMirror ul ul {
+  list-style: circle;
+}
+.notepad .ProseMirror ul ul ul {
+  list-style: square;
+}
+.notepad .ProseMirror li {
+  margin-block: 0.15rem;
+}
+.notepad .ProseMirror li::marker {
+  color: var(--color-ink-secondary);
+}
+.notepad .ProseMirror li > p {
+  margin: 0;
+}
+.notepad .ProseMirror ul[data-type='taskList'] {
+  list-style: none;
+  margin-left: 0.2em;
+}
+.notepad .ProseMirror ul[data-type='taskList'] li {
+  display: flex;
+  gap: 0.5em;
+  align-items: flex-start;
+}
+.notepad .ProseMirror ul[data-type='taskList'] li > label {
+  margin-top: 0.25em;
+}
+.notepad .ProseMirror ul[data-type='taskList'] input {
+  accent-color: var(--color-fill-accent);
+}
+.notepad .ProseMirror ul[data-type='taskList'] li > div {
+  flex: 1;
+}
+.notepad .ProseMirror blockquote {
+  border-left: 2px solid var(--color-ink-accent-strong);
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+  quotes: '\201C' '\201D' '\2018' '\2019';
+}
+.notepad .ProseMirror blockquote p {
+  text-indent: -0.3em;
+}
+.notepad .ProseMirror blockquote p::before {
+  content: open-quote;
+}
+.notepad .ProseMirror blockquote p::after {
+  content: close-quote;
+}
+.notepad .ProseMirror strong {
+  font-weight: 600;
+}
+.notepad .ProseMirror code {
+  background: var(--color-fill-highlight);
+  border: 0.5px solid var(--color-border-strong);
+  border-radius: 4px;
+  padding: 1px 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.notepad .ProseMirror pre {
+  background: var(--color-fill-highlight);
+  border: 0.5px solid var(--color-border-strong);
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 16px;
+}
+.notepad .ProseMirror pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.notepad .ProseMirror a {
+  color: var(--color-ink-accent-strong);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.notepad .ProseMirror a:hover {
+  text-decoration: underline;
+}
+.notepad .ProseMirror hr {
+  border: none;
+  border-top: 1px solid var(--color-border-strong);
+  margin: 1em 0;
+}
+.notepad .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-ink-tertiary);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Enhanced notes (views/note/EnhancedEditor.tsx): the same editor, with lines the AI wrote in grey. Editing a line
+   changes its text, so it no longer matches `generated_lines` and turns black. Paragraphs keep a right gutter for
+   the Transcript Summary button. */
+.enhanced-notes .ProseMirror {
+  min-height: 0;
+  padding-bottom: 0;
+}
+.enhanced-notes .ProseMirror :is(p, h1, h2, h3) {
+  transition: color 0.1s;
+}
+.enhanced-notes .ProseMirror :is(p, h1, h2, h3)[data-generated='true'] {
+  color: var(--color-ink-secondary);
+}
+.enhanced-notes .ProseMirror p {
+  padding-right: 2rem;
+}
+
+/* ---------------------------------------------------------------- chat bar */
+
+/* The chat bar's editor (components/chat/Composer.tsx): a single-paragraph-at-a-time field, placeholder drawn from
+   data-placeholder, recipe and note atoms inline. */
+.chat-editor {
+  line-height: 19px;
+  user-select: text;
+}
+.chat-editor p {
+  margin: 0;
+}
+.chat-editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-ink-tertiary);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.chat-recipe-node {
+  display: inline-flex;
+  max-width: 300px;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px 0 4px;
+  border-radius: 6px;
+  background: var(--color-fill-accent-highlight);
+  color: var(--color-ink-accent-strong);
+  vertical-align: bottom;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-recipe-icon {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72'/%3E%3Cpath d='m14 7 3 3'/%3E%3Cpath d='M5 6v4'/%3E%3Cpath d='M19 14v4'/%3E%3Cpath d='M10 2v2'/%3E%3Cpath d='M7 8H3'/%3E%3Cpath d='M21 16h-4'/%3E%3Cpath d='M11 3H9'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72'/%3E%3Cpath d='m14 7 3 3'/%3E%3Cpath d='M5 6v4'/%3E%3Cpath d='M19 14v4'/%3E%3Cpath d='M10 2v2'/%3E%3Cpath d='M7 8H3'/%3E%3Cpath d='M21 16h-4'/%3E%3Cpath d='M11 3H9'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+.chat-mention-node {
+  color: var(--color-ink-primary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.chat-mention-at {
+  color: var(--color-ink-tertiary);
+  margin-right: 1px;
+}
+
+/* ------------------------------------------------------------------ widget */
+
+body.widget {
+  background: transparent;
+  overflow: hidden;
+}
