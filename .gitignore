@@ -8,3 +8,4 @@ dist/
 .env
 .flatpak/
 .flatpak-builder/
+docs/
